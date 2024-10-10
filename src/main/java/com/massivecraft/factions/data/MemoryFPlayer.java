@@ -1091,12 +1091,12 @@ public abstract class MemoryFPlayer implements FPlayer {
             return false;
         }
 
-        if (this.getFaction() != targetFaction) {
-            if (notifyFailure) {
-                this.msg(TL.COMMAND_UNCLAIM_WRONGFACTION);
-            }
-            return false;
-        }
+        // if (this.getFaction() != targetFaction) {
+        //     if (notifyFailure) {
+        //         this.msg(TL.COMMAND_UNCLAIM_WRONGFACTION);
+        //     }
+        //     return false;
+        // }
 
         LandUnclaimEvent unclaimEvent = new LandUnclaimEvent(flocation, targetFaction, this);
         Bukkit.getServer().getPluginManager().callEvent(unclaimEvent);
