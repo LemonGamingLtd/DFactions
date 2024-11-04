@@ -41,16 +41,11 @@ public class CmdTNTFill extends FCommand {
             context.msg(TL.COMMAND_TNT_TERRITORYONLY);
             return;
         }
-        final int radius = context.argAsInt(0, -1);
-        final int amount = context.argAsInt(1, -1);
 
+        final int radius = context.argAsInt(0, -1);
+        int amount = context.argAsInt(1, -1);
         if (radius <= 0 || amount <= 0) {
             context.msg(TL.COMMAND_TNT_FILL_FAIL_POSITIVE);
-            return;
-        }
-
-        if (amount > context.faction.getTNTBank()) {
-            context.msg(TL.COMMAND_TNT_FILL_FAIL_NOTENOUGH, amount);
             return;
         }
 
@@ -61,6 +56,14 @@ public class CmdTNTFill extends FCommand {
 
         List<Dispenser> list = getDispensers(context.player.getLocation(), radius, context.faction.getIntId());
         Collections.reverse(list);
+
+        final int dispensersAmount = list.size();
+        amount *= dispensersAmount;
+
+        if (amount > context.faction.getTNTBank()) {
+            context.msg(TL.COMMAND_TNT_FILL_FAIL_NOTENOUGH, amount, dispensersAmount);
+            return;
+        }
 
         int remaining = amount;
         int dispenserCount = 0;
